@@ -9,6 +9,17 @@ import api from '../../services/api';
 import { Container, Logo, Input, ErrorMessage, Button, ButtonText, SignUpLink, SignUpLinkText } from './styles';
 
 export default class SignIn extends Component {
+
+    static navigationOptions = {
+        header: null,
+    };
+
+    state = {
+        email: '',
+        password: '',
+        error: '',
+    };
+
     render() {
         return(
             <Container>
