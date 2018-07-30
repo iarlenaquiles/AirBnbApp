@@ -20,6 +20,10 @@ export default class SignIn extends Component {
         error: '',
     };
 
+    handleEmailChange = (email) => {
+        this.setState({ email });
+    };
+
     render() {
         return(
             <Container>
