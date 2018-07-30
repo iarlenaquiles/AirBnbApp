@@ -28,6 +28,10 @@ export default class SignIn extends Component {
         this.setState({ password });
     };
 
+    handleCreateAccountPress = () => {
+        this.props.navigation.navigate('SignUp');
+    };
+
     render() {
         return(
             <Container>
