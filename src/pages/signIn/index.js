@@ -14,6 +14,13 @@ export default class SignIn extends Component {
         header: null,
     };
 
+    static propTypes = {
+        navigation: PropTypes.shape({
+          navigate: PropTypes.func,
+          dispatch: PropTypes.func,
+        }).isRequired,
+      };
+
     state = {
         email: '',
         password: '',
@@ -30,6 +37,30 @@ export default class SignIn extends Component {
 
     handleCreateAccountPress = () => {
         this.props.navigation.navigate('SignUp');
+    };
+
+    handleSignInPress = async () => {
+        if (this.state.email.length === 0 || this.state.password.length === 0) {
+            this.setState({ error: 'Preencha o email e a senha para continuar!'}, () => false);
+        } else {
+            try {
+                const response = await api.post('/sessions', {
+                    email: this.state.email,
+                    password: this.state.password
+                });
+
+                const resetAction = StackActions.reset({
+                    index: 0,
+                    actions: [
+                        NavigationActions.navigate({ routeName: 'Main', params: { token: response.data.token }}),
+                    ],
+                });
+
+                this.props.navigation.dispach(resetAction);
+            } catch(_err){
+                this.setState({ error: 'Houve um problema com o seu login, verifique as credenciais!'});
+            }
+        }
     };
 
     render() {
